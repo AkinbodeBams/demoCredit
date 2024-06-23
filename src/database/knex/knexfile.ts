@@ -1,11 +1,9 @@
-import type { Knex } from "knex";
-import dotenv from "dotenv";
-import envStore from "../../envStore/store";
-
-dotenv.config();
+import { Knex } from "knex";
+import path from "path";
+import { envStore } from "../../envStore";
 
 const knexConfig: { [key: string]: Knex.Config } = {
-  development: {
+  dev: {
     client: "mysql2",
     connection: {
       host: envStore.DB_HOST,
@@ -15,10 +13,10 @@ const knexConfig: { [key: string]: Knex.Config } = {
     },
     pool: { min: 0, max: 7 },
     migrations: {
-      directory: "./src/database/migrations",
+      directory: path.resolve(__dirname, "migrations"),
     },
     seeds: {
-      directory: "./src/database/seeds",
+      directory: path.resolve(__dirname, "seeds"),
     },
   },
   production: {
@@ -31,10 +29,10 @@ const knexConfig: { [key: string]: Knex.Config } = {
     },
     pool: { min: 0, max: 7 },
     migrations: {
-      directory: "./src/database/migrations",
+      directory: path.resolve(__dirname, "migrations"),
     },
     seeds: {
-      directory: "./src/database/seeds",
+      directory: path.resolve(__dirname, "seeds"),
     },
   },
 };

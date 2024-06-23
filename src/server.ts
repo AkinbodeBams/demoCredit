@@ -2,7 +2,7 @@ import http from "http";
 
 import app from "./app";
 
-const port = process.env.PORT || 8009;
+const port = process.env.PORT || 3000;
 const { pid } = process;
 
 app.set("port", port);
