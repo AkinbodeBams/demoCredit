@@ -2,34 +2,33 @@ import { EnvStore } from "./types";
 
 const envStore: EnvStore = {
   DB_HOST: "127.0.0.1",
-  DB_PORT: "5432",
-  DB_USERNAME: "postgres",
-  DB_PASSWORD: "",
+  DB_PORT: "3306",
+  DB_USERNAME: process.env.DB_USERNAME || "",
+  DB_PASSWORD: process.env.DB_USERNAME || "",
   DB_NAME: "demoCredit",
-  appEnvironment: "dev",
+  APP_ENV: "dev",
 };
 
 const setEnvStoreFromEnvironment = () => {
   (Object.keys(envStore) as Array<keyof EnvStore>).forEach((envVar) => {
     const envValue = process.env[envVar];
+    console.log(envValue);
+
     if (envValue) {
       if (
-        envVar === "appEnvironment" &&
+        envVar === "APP_ENV" &&
         (envValue === "dev" || envValue === "production")
       ) {
         envStore[envVar] = envValue as "dev" | "production";
-      } else if (envVar !== "appEnvironment") {
+      } else if (envVar !== "APP_ENV") {
         envStore[envVar] = envValue;
       }
     }
   });
 
-  if (
-    envStore.appEnvironment !== "dev" &&
-    envStore.appEnvironment !== "production"
-  ) {
+  if (envStore.APP_ENV !== "dev" && envStore.APP_ENV !== "production") {
     console.error(
-      `Invalid appEnvironment value: ${envStore.appEnvironment}. Expected "dev" or "production".`
+      `Invalid APP_ENV value: ${envStore.APP_ENV}. Expected "dev" or "production".`
     );
     process.exit(1);
   }
