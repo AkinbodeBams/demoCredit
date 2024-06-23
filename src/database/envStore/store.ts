@@ -1,15 +1,12 @@
 import { EnvStore } from "./types";
 
 const envStore: EnvStore = {
-  DB_TYPE: "postgres",
   DB_HOST: "127.0.0.1",
   DB_PORT: "5432",
   DB_USERNAME: "postgres",
   DB_PASSWORD: "",
-  DB_NAME: "buffer",
+  DB_NAME: "demoCredit",
 };
-
-export default envStore;
 
 const setEnvStoreFromEnvironment = () => {
   (Object.keys(envStore) as Array<keyof EnvStore>).forEach((envVar) => {
@@ -29,3 +26,5 @@ export const configureEnv = async (): Promise<void> => {
     process.exit(1);
   }
 };
+
+export default envStore;

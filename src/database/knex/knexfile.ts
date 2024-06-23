@@ -1,5 +1,6 @@
 import type { Knex } from "knex";
 import dotenv from "dotenv";
+import envStore from "../envStore/store";
 
 dotenv.config();
 
@@ -7,10 +8,10 @@ const knexConfig: { [key: string]: Knex.Config } = {
   development: {
     client: "mysql2",
     connection: {
-      host: process.env.DB_HOST,
-      user: process.env.DB_USER,
-      password: process.env.DB_PASSWORD,
-      database: process.env.DB_NAME,
+      host: envStore.DB_HOST,
+      user: envStore.DB_USERNAME,
+      password: envStore.DB_PASSWORD,
+      database: envStore.DB_NAME,
     },
     pool: { min: 0, max: 7 },
     migrations: {
@@ -23,10 +24,10 @@ const knexConfig: { [key: string]: Knex.Config } = {
   production: {
     client: "mysql2",
     connection: {
-      host: process.env.DB_HOST,
-      user: process.env.DB_USER,
-      password: process.env.DB_PASSWORD,
-      database: process.env.DB_NAME,
+      host: envStore.DB_HOST,
+      user: envStore.DB_USERNAME,
+      password: envStore.DB_PASSWORD,
+      database: envStore.DB_NAME,
     },
     pool: { min: 0, max: 7 },
     migrations: {
