@@ -1,6 +1,6 @@
 import type { Knex } from "knex";
 import dotenv from "dotenv";
-import envStore from "../envStore/store";
+import envStore from "../../envStore/store";
 
 dotenv.config();
 
