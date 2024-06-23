@@ -4,15 +4,14 @@ const envStore: EnvStore = {
   DB_HOST: "127.0.0.1",
   DB_PORT: "3306",
   DB_USERNAME: process.env.DB_USERNAME || "",
-  DB_PASSWORD: process.env.DB_USERNAME || "",
-  DB_NAME: "demoCredit",
+  DB_PASSWORD: process.env.DB_PASSWORD || "",
+  DB_NAME: process.env.DB_NAME || "",
   APP_ENV: "dev",
 };
 
 const setEnvStoreFromEnvironment = () => {
   (Object.keys(envStore) as Array<keyof EnvStore>).forEach((envVar) => {
     const envValue = process.env[envVar];
-    console.log(envValue);
 
     if (envValue) {
       if (

@@ -12,7 +12,6 @@ export function initializeDatabase(): Promise<KnexType> {
   return knex
     .raw("select 1+1 as result")
     .then(() => {
-      console.log("Database connection established");
       return knex;
     })
     .catch((error) => {

@@ -9,6 +9,7 @@ const initialize = async (body: (() => void) | (() => Promise<void>)) => {
     await initializeDatabase();
     setupApp(app);
     body();
+    console.log("All Connections Successful");
   } catch (error: any) {
     console.error(`Error Starting Application: ${error.message}`);
     process.exit(1);
