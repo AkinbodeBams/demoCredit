@@ -6,14 +6,11 @@ import { errorResponse, successResponse } from "../lib/httpResponse";
 
 const createUser = async (req: Request, res: Response) => {
   const dto = await validate<CreateUserDto>({ ...req.body }, CreateUserDto);
-  // console.log(dto);
-
   const response = await userService.createUser(dto);
 
   if (!response.data) {
     return errorResponse({ ...response, req, res });
   }
-
   return successResponse({ res, data: response.data });
 };
 

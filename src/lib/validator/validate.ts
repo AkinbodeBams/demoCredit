@@ -1,30 +1,10 @@
-/* istanbul ignore file */
 import { ClassConstructor, plainToClass } from "class-transformer";
 import {
   validate as classValidatorValidate,
-  ValidationError as ClassValidatorValidationError,
-  registerDecorator,
-  ValidationArguments,
-  ValidationOptions,
-  ValidatorConstraint,
-  ValidatorConstraintInterface,
   ValidatorOptions,
 } from "class-validator";
 import { httpErrors } from "../errorHandler";
-
-export const getFirstErrorConstraints = (
-  err: ClassValidatorValidationError
-): { [key: string]: string } | undefined => {
-  let firstErrorConstraints: { [key: string]: string } | undefined;
-
-  if (err.constraints) {
-    firstErrorConstraints = err.constraints;
-  } else if (err.children && err.children.length > 0) {
-    firstErrorConstraints = getFirstErrorConstraints(err.children[0]);
-  }
-
-  return firstErrorConstraints;
-};
+import { getFirstErrorConstraints } from "./validationFunctions";
 
 export const validate = async <T>(
   data: unknown,
@@ -53,36 +33,3 @@ export const validate = async <T>(
 
   return dto;
 };
-
-@ValidatorConstraint({ async: false })
-class OneOfConstraint implements ValidatorConstraintInterface {
-  validate(value: any, args: ValidationArguments) {
-    const [relatedProperties] = args.constraints;
-    const object = args.object as Record<string, any>;
-
-    return relatedProperties.some(
-      (propertyName: string | number) =>
-        object[propertyName] !== undefined && object[propertyName] !== null
-    );
-  }
-
-  defaultMessage(args: ValidationArguments) {
-    const [relatedProperties] = args.constraints;
-    return `At least one of ${relatedProperties.join(", ")} must be provided`;
-  }
-}
-
-export function OneOf(
-  properties: string[],
-  validationOptions?: ValidationOptions
-) {
-  return function (object: Object, propertyName: string) {
-    registerDecorator({
-      target: object.constructor,
-      propertyName: propertyName,
-      options: validationOptions,
-      constraints: [properties],
-      validator: OneOfConstraint,
-    });
-  };
-}

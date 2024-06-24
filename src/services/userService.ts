@@ -2,13 +2,14 @@ import { CreateAccountDto, CreateUserDto } from "../dto";
 import { Account } from "../database/models";
 import { accountDao, userDao } from "../database/dao";
 import { httpErrors } from "../lib/errorHandler";
+import { v4 as uuidv4 } from "uuid";
+import { findUserWithAccountByUserId } from "../database/dao/userDao";
 
 const createUser = async (dto: CreateUserDto) => {
+  const userId = uuidv4();
   try {
-    if (!dto.firstName || !dto.lastName || !dto.bvn) {
-      throw new httpErrors.ValidationError("Missing required fields");
-    }
     const user = await userDao.createUser({
+      id: userId,
       firstName: dto.firstName,
       lastName: dto.lastName,
       email: dto.email || null,
@@ -16,17 +17,13 @@ const createUser = async (dto: CreateUserDto) => {
       bvn: dto.bvn,
     });
 
-    if (!user.id) {
-      throw new httpErrors.InternalServerError("User ID is undefined");
-    }
-
-    const accountNumber = generateUniqueAccountNumber();
-
+    const accountNumber = await generateUniqueAccountNumber();
     const accountDto = new CreateAccountDto(user.id, accountNumber);
-
     await createAccount(accountDto);
 
-    return { data: { user } };
+    const data = await findUserWithAccountByUserId(user.id);
+
+    return { data };
   } catch (error) {
     if (error instanceof httpErrors.ValidationError) {
       throw error;
@@ -52,8 +49,24 @@ const createAccount = async (dto: CreateAccountDto): Promise<Account> => {
   }
 };
 
-const generateUniqueAccountNumber = (): string => {
-  return Math.random().toString().slice(2, 12); // Generates a random 10 digit number
+const generateUniqueAccountNumber = async (): Promise<string> => {
+  let unique = false;
+  let accountNumber = "";
+
+  while (!unique) {
+    accountNumber = Math.floor(
+      1000000000 + Math.random() * 9000000000
+    ).toString();
+    const existingAccount = await accountDao.getAccountByAccountNumber(
+      accountNumber
+    );
+
+    if (!existingAccount) {
+      unique = true;
+    }
+  }
+
+  return accountNumber;
 };
 
 export default { createUser };

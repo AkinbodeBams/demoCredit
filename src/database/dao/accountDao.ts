@@ -18,7 +18,14 @@ const getAccountByUserId = async (
   return await Account.query().where("userId", userId).first();
 };
 
+const getAccountByAccountNumber = async (
+  accountNumber: string
+): Promise<Account | undefined> => {
+  return await Account.query().where("accountNumber", accountNumber).first();
+};
+
 export default {
   createAccount,
   getAccountByUserId,
+  getAccountByAccountNumber,
 };
