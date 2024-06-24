@@ -1,6 +1,6 @@
 import { accountDao } from "../database/dao";
 import { Account } from "../database/models";
-import { CreateAccountDto } from "../dto";
+import { CreateAccountDto, FundAccountDto } from "../dto";
 import { httpErrors } from "../lib/errorHandler";
 
 const createAccount = async (dto: CreateAccountDto): Promise<Account> => {
@@ -17,4 +17,22 @@ const createAccount = async (dto: CreateAccountDto): Promise<Account> => {
   }
 };
 
-export default { createAccount };
+const fundAccount = async (dto: FundAccountDto): Promise<any> => {
+  const { accountNumber, amount } = dto;
+  try {
+    const account = await accountDao.getAccountByAccountNumber(accountNumber);
+    if (!account) {
+      throw new httpErrors.NotFoundError(
+        "Error funding account: Account not found"
+      );
+    }
+    const data = await accountDao.fundAccount(account, amount);
+    return { data };
+  } catch (error) {
+    throw new httpErrors.InternalServerError(
+      "Error funding account: " + error.message
+    );
+  }
+};
+
+export default { createAccount, fundAccount };

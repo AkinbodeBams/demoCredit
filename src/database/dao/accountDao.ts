@@ -1,4 +1,4 @@
-import { v4 as uuidv4 } from "uuid";
+import { transaction } from "objection";
 import { CreateAccountDto } from "../../dto";
 import { Account } from "../models";
 
@@ -24,8 +24,21 @@ const getAccountByAccountNumber = async (
   return await Account.query().where("accountNumber", accountNumber).first();
 };
 
+const fundAccount = async (
+  account: Account,
+  amount: number
+): Promise<Account> => {
+  const newBalance = Number(account.balance) + amount;
+  const updatedAccount = await account
+    .$query()
+    .patchAndFetch({ balance: newBalance })
+    .select("balance");
+  return updatedAccount;
+};
+
 export default {
   createAccount,
   getAccountByUserId,
   getAccountByAccountNumber,
+  fundAccount,
 };

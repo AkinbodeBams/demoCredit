@@ -3,8 +3,9 @@ import {
   IsString,
   Length,
   Matches,
-  IsUUID,
   IsOptional,
+  Min,
+  IsNumber,
 } from "class-validator";
 
 export class CreateAccountDto {
@@ -33,9 +34,13 @@ export class CreateAccountDto {
 }
 
 export class FundAccountDto {
-  constructor(accountNumber: string) {
+  constructor(accountNumber: string, amount: number) {
     this.accountNumber = accountNumber;
+    this.amount = amount;
   }
+  @Min(1)
+  @IsNumber()
+  amount!: number;
 
   @IsNotEmpty()
   @IsString()

@@ -36,7 +36,6 @@ export const successResponse = ({
 };
 
 export const errorResponse = ({
-  req,
   res,
   code,
   message,
