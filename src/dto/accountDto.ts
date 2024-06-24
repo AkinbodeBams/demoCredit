@@ -31,3 +31,17 @@ export class CreateAccountDto {
   @IsOptional()
   isActive?: boolean;
 }
+
+export class FundAccountDto {
+  constructor(accountNumber: string) {
+    this.accountNumber = accountNumber;
+  }
+
+  @IsNotEmpty()
+  @IsString()
+  @Length(10, 10, {
+    message: "Account number must be exactly 10 characters long",
+  })
+  @Matches(/^\d+$/, { message: "Account number must contain only numbers" })
+  accountNumber!: string;
+}
