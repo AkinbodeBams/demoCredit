@@ -1,8 +1,8 @@
 // src/database/index.ts
 import Knex, { Knex as KnexType } from "knex";
 import { Model } from "objection";
-import knexConfig from "./knex/knexfile";
 import { envStore } from "../envStore";
+import knexConfig from "./knexfile";
 
 export function initializeDatabase(): Promise<KnexType> {
   const config = knexConfig[envStore.APP_ENV];

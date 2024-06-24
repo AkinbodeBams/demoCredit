@@ -4,5 +4,5 @@ export interface EnvStore {
   DB_USERNAME: string;
   DB_PASSWORD: string;
   DB_NAME: string;
-  APP_ENV: "dev" | "production";
+  APP_ENV: "development" | "production";
 }

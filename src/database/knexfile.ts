@@ -1,9 +1,11 @@
 import { Knex } from "knex";
 import path from "path";
-import { envStore } from "../../envStore";
+import { envStore } from "../envStore";
+
+console.log(path.resolve(__dirname, "migrations"));
 
 const knexConfig: { [key: string]: Knex.Config } = {
-  dev: {
+  development: {
     client: "mysql2",
     connection: {
       host: envStore.DB_HOST,
@@ -13,6 +15,7 @@ const knexConfig: { [key: string]: Knex.Config } = {
     },
     pool: { min: 0, max: 7 },
     migrations: {
+      tableName: "knex_migrations",
       directory: path.resolve(__dirname, "migrations"),
     },
     seeds: {
@@ -29,6 +32,7 @@ const knexConfig: { [key: string]: Knex.Config } = {
     },
     pool: { min: 0, max: 7 },
     migrations: {
+      tableName: "knex_migrations",
       directory: path.resolve(__dirname, "migrations"),
     },
     seeds: {

@@ -3,10 +3,10 @@ import { EnvStore } from "./types";
 const envStore: EnvStore = {
   DB_HOST: "127.0.0.1",
   DB_PORT: "3306",
-  DB_USERNAME: process.env.DB_USERNAME || "",
-  DB_PASSWORD: process.env.DB_PASSWORD || "",
-  DB_NAME: process.env.DB_NAME || "",
-  APP_ENV: "dev",
+  DB_USERNAME: "root",
+  DB_PASSWORD: "icui4cu4u",
+  DB_NAME: "demo_credit",
+  APP_ENV: "development",
 };
 
 const setEnvStoreFromEnvironment = () => {
@@ -16,18 +16,18 @@ const setEnvStoreFromEnvironment = () => {
     if (envValue) {
       if (
         envVar === "APP_ENV" &&
-        (envValue === "dev" || envValue === "production")
+        (envValue === "development" || envValue === "production")
       ) {
-        envStore[envVar] = envValue as "dev" | "production";
+        envStore[envVar] = envValue as "development" | "production";
       } else if (envVar !== "APP_ENV") {
         envStore[envVar] = envValue;
       }
     }
   });
 
-  if (envStore.APP_ENV !== "dev" && envStore.APP_ENV !== "production") {
+  if (envStore.APP_ENV !== "development" && envStore.APP_ENV !== "production") {
     console.error(
-      `Invalid APP_ENV value: ${envStore.APP_ENV}. Expected "dev" or "production".`
+      `Invalid APP_ENV value: ${envStore.APP_ENV}. Expected "development" or "production".`
     );
     process.exit(1);
   }

@@ -68,4 +68,5 @@ export default {
   NotFoundError,
   InternalError,
   BadRequestError,
+  ValidationError,
 };
