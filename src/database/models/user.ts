@@ -1,7 +1,16 @@
 import { Model } from "objection";
 
-export class User extends Model {
+export default class User extends Model {
   static tableName = "users";
+
+  id!: string;
+  firstName!: string;
+  lastName!: string;
+  email: string | null = null;
+  phoneNumber: string | null = null;
+  bvn!: string;
+  createdAt!: string;
+  updatedAt!: string;
 
   static get jsonSchema() {
     return {
@@ -11,7 +20,6 @@ export class User extends Model {
         email: { type: ["string", "null"] },
         phoneNumber: { type: ["string", "null"] },
         bvn: { type: "string", minLength: 11, maxLength: 11 },
-        accountNumber: { type: "string", minLength: 10, maxLength: 10 },
         firstName: { type: "string" },
         lastName: { type: "string" },
         createdAt: { type: "string" },

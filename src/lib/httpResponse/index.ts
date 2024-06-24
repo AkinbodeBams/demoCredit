@@ -22,9 +22,6 @@ type errorResponseInputType = {
   statusCode?: number;
 };
 
-
-
-
 export const successResponse = ({
   res,
   data,
@@ -53,8 +50,6 @@ export const errorResponse = ({
     message: responseMessage,
   };
 
-  console.error(responseMessage);
-
+  console.error(`${errorCode},${responseMessage}`);
   return res.status(statusCode || 500).send(responseBody);
 };
-

@@ -11,14 +11,14 @@ import {
   ValidatorConstraint,
   ValidatorConstraintInterface,
 } from "class-validator";
-import { UserDAO } from "../database/daos/userDaos";
 import { OneOf } from "../lib/validator";
+import { userDao } from "../database/dao";
 
 @ValidatorConstraint({ async: true })
 class IsUniqueEmailConstraint implements ValidatorConstraintInterface {
   async validate(email: any) {
     if (!email) return true;
-    const user = await UserDAO.findByEmail(email);
+    const user = await userDao.findByEmail(email);
     return !user;
   }
 
@@ -43,7 +43,7 @@ function IsUniqueEmail(validationOptions?: ValidationOptions) {
 class IsUniquePhoneNumberConstraint implements ValidatorConstraintInterface {
   async validate(phoneNumber: any) {
     if (!phoneNumber) return true;
-    const user = await UserDAO.findByPhoneNumber(phoneNumber);
+    const user = await userDao.findByPhoneNumber(phoneNumber);
     return !user;
   }
 
@@ -67,7 +67,7 @@ function IsUniquePhoneNumber(validationOptions?: ValidationOptions) {
 @ValidatorConstraint({ async: true })
 class IsUniqueBvnConstraint implements ValidatorConstraintInterface {
   async validate(bvn: any) {
-    const user = await UserDAO.findByBvn(bvn);
+    const user = await userDao.findByBvn(bvn);
     return !user;
   }
 
@@ -88,7 +88,7 @@ function IsUniqueBvn(validationOptions?: ValidationOptions) {
   };
 }
 
-export class CreateUserDTO {
+export class CreateUserDto {
   @IsNotEmpty()
   @IsString()
   firstName!: string;

@@ -69,4 +69,5 @@ export default {
   InternalError,
   BadRequestError,
   ValidationError,
+  InternalServerError,
 };
