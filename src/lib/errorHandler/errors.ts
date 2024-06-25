@@ -43,13 +43,6 @@ class NotFoundError extends ApplicationError {
   }
 }
 
-class ConflictError extends ApplicationError {
-  constructor(message: string) {
-    super(message, 409, "ConflictError");
-    this.name = "ConflictError";
-  }
-}
-
 class InternalServerError extends ApplicationError {
   constructor(message: string) {
     super(message, 500, "InternalServerError");
@@ -64,10 +57,18 @@ class InternalError extends ApplicationError {
   }
 }
 
+class InsufficientBalanceError extends ApplicationError {
+  constructor(message: string) {
+    super(message, 400, "InsufficientBalanceError");
+    this.name = "InsufficientBalanceError";
+  }
+}
+
 export default {
   NotFoundError,
   InternalError,
   BadRequestError,
   ValidationError,
   InternalServerError,
+  InsufficientBalanceError,
 };

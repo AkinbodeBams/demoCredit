@@ -35,23 +35,23 @@ const fundAccount = async (dto: FundAndWithdrawAccountDto): Promise<any> => {
 
 const withdrawFund = async (dto: FundAndWithdrawAccountDto): Promise<any> => {
   const { accountNumber, amount } = dto;
-  try {
-    const account = await accountDao.getAccountByAccountNumber(accountNumber);
-    if (!account) {
-      throw new httpErrors.NotFoundError(
-        "Error Withdrawing fund: Account not found"
-      );
-    }
-    const newBalance = Number(account.balance) + amount;
-    const data = await accountDao.updateAccount(account, {
-      balance: newBalance,
-    });
-    return { data };
-  } catch (error) {
-    throw new httpErrors.InternalServerError(
-      "Error Withdrawing fund: " + error.message
+
+  const account = await accountDao.getAccountByAccountNumber(accountNumber);
+  if (!account) {
+    throw new httpErrors.NotFoundError(
+      `${errMsg.WITHDRAW_ERROR}: ${errMsg.ACCOUNT_NOT_FOUND}`
     );
   }
+  if (account.balance < amount) {
+    throw new httpErrors.InsufficientBalanceError(
+      `${errMsg.WITHDRAW_ERROR}: ${errMsg.INSUFFICIENT_BALANCE_ERROR}`
+    );
+  }
+  const newBalance = Number(account.balance) - amount;
+  const data = await accountDao.updateAccount(account, {
+    balance: newBalance,
+  });
+  return { data };
 };
 
-export default { createAccount, fundAccount };
+export default { createAccount, fundAccount, withdrawFund };

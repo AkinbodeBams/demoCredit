@@ -22,7 +22,7 @@ const withdrawFund = async (req: Request, res: Response) => {
     { ...req.body },
     FundAndWithdrawAccountDto
   );
-  const response = await accountService.fundAccount(dto);
+  const response = await accountService.withdrawFund(dto);
 
   if (!response.data) {
     return errorResponse({ ...response, res });
@@ -30,4 +30,4 @@ const withdrawFund = async (req: Request, res: Response) => {
   return successResponse({ res, data: response.data });
 };
 
-export default { fundAccount };
+export default { fundAccount, withdrawFund };
