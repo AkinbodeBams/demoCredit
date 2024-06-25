@@ -51,7 +51,8 @@ export class FundAndWithdrawAccountDto {
     this.accountNumber = accountNumber;
     this.amount = amount;
   }
-  @Min(0.5)
+  @IsNotEmpty()
+  @Min(0.5) // changeable
   @IsNumber()
   amount!: number;
 
@@ -62,4 +63,23 @@ export class FundAndWithdrawAccountDto {
   })
   @Matches(/^\d+$/, { message: "Account number must contain only numbers" })
   accountNumber!: string;
+}
+
+export class TransferFundDto {
+  constructor(sender: string, recipient: string) {
+    this.sender = sender;
+    this.recipient = recipient;
+  }
+  @IsNotEmpty()
+  @IsString()
+  @Length(10, 10, {
+    message: "Account number must be exactly 10 characters long",
+  })
+  sender!: string;
+  recipient!: string;
+
+  @IsNotEmpty()
+  @Min(0.5) // changeable
+  @IsNumber()
+  amount!: number;
 }

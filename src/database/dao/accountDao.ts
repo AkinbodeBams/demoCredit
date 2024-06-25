@@ -1,3 +1,4 @@
+import { Transaction } from "objection";
 import { CreateAccountDto, UpdateAccountDtoClass } from "../../dto";
 import { Account } from "../models";
 
@@ -18,9 +19,10 @@ const getAccountByUserId = async (
 };
 
 const getAccountByAccountNumber = async (
-  accountNumber: string
+  accountNumber: string,
+  trx?: Transaction
 ): Promise<Account | undefined> => {
-  return await Account.query().where("accountNumber", accountNumber).first();
+  return await Account.query(trx).where("accountNumber", accountNumber).first();
 };
 
 const updateAccount = async (
