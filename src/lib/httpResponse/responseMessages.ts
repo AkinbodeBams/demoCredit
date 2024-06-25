@@ -7,4 +7,10 @@ export enum errorResponseMessage {
   TOKEN_INVALID = "Token is invalid",
   NO_TOKEN = "No token Provided",
   TOKEN_EXPIRED = "Token has expired",
+
+  ACCOUNT_NOT_FOUND = "Account not found",
+  USER_NOT_FOUND = "User not found",
+
+  WITHDRAW_ERROR = "Error withdrawing fund",
+  FUND_ERROR = "Error funding account",
 }

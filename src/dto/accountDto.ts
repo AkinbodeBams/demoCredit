@@ -7,6 +7,7 @@ import {
   Min,
   IsNumber,
 } from "class-validator";
+import { updateAccountDto } from "./types";
 
 export class CreateAccountDto {
   constructor(userId: string, accountNumber: string) {
@@ -33,12 +34,24 @@ export class CreateAccountDto {
   isActive?: boolean;
 }
 
-export class FundAccountDto {
+export class UpdateAccountDtoClass implements updateAccountDto {
+  balance: number;
+  accountNumber?: string;
+  isActive?: boolean;
+
+  constructor(data: updateAccountDto) {
+    this.balance = data.balance;
+    this.accountNumber = data.accountNumber;
+    this.isActive = data.isActive;
+  }
+}
+
+export class FundAndWithdrawAccountDto {
   constructor(accountNumber: string, amount: number) {
     this.accountNumber = accountNumber;
     this.amount = amount;
   }
-  @Min(1)
+  @Min(0.5)
   @IsNumber()
   amount!: number;
 

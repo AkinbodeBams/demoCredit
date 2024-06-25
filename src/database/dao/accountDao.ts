@@ -1,6 +1,7 @@
 import { transaction } from "objection";
-import { CreateAccountDto } from "../../dto";
+import { CreateAccountDto, UpdateAccountDtoClass } from "../../dto";
 import { Account } from "../models";
+import { fundAccountReturnData } from "./types";
 
 const createAccount = async (data: CreateAccountDto): Promise<Account> => {
   const account = await Account.query().insert({
@@ -24,21 +25,23 @@ const getAccountByAccountNumber = async (
   return await Account.query().where("accountNumber", accountNumber).first();
 };
 
-const fundAccount = async (
+const updateAccount = async (
   account: Account,
-  amount: number
-): Promise<Account> => {
-  const newBalance = Number(account.balance) + amount;
-  const updatedAccount = await account
-    .$query()
-    .patchAndFetch({ balance: newBalance })
-    .select("balance");
-  return updatedAccount;
+  data: UpdateAccountDtoClass
+): Promise<Partial<Account>> => {
+  const formattedDate = new Date().toISOString().slice(0, 19).replace("T", " ");
+  const updateData = {
+    ...data,
+    updatedAt: formattedDate,
+  };
+  const updatedAccount = await account.$query().patchAndFetch(updateData);
+  const { updatedAt, accountNumber, balance } = updatedAccount;
+  return { updatedAt, accountNumber, balance };
 };
 
 export default {
   createAccount,
   getAccountByUserId,
   getAccountByAccountNumber,
-  fundAccount,
+  updateAccount,
 };
