@@ -2,7 +2,6 @@ import { User } from "../models";
 
 const createUser = async (user: Partial<User>): Promise<User> => {
   const createdUser = await User.query().insert(user);
-
   return createdUser;
 };
 

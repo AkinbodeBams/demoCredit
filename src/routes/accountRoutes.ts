@@ -1,5 +1,5 @@
 import { Router } from "express";
-import accountController from "../controllers/accountController";
+import { accountController } from "../controllers";
 
 const router = Router();
 router.post("/fund-account", accountController.fundAccount);

@@ -1,7 +1,5 @@
-import { transaction } from "objection";
 import { CreateAccountDto, UpdateAccountDtoClass } from "../../dto";
 import { Account } from "../models";
-import { fundAccountReturnData } from "./types";
 
 const createAccount = async (data: CreateAccountDto): Promise<Account> => {
   const account = await Account.query().insert({
