@@ -10,6 +10,7 @@ export enum errorResponseMessage {
 
   ACCOUNT_NOT_FOUND = "Account not found",
   USER_NOT_FOUND = "User not found",
+  USER_BLACKLISTED = "User has been blacklisted",
 
   WITHDRAW_ERROR = "Error withdrawing fund",
   FUND_ERROR = "Error funding account",

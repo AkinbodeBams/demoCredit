@@ -1,6 +1,6 @@
 import { transaction } from "objection";
 import { accountDao } from "../database/dao";
-import { Account, User } from "../database/models";
+import { Account } from "../database/models";
 import {
   CreateAccountDto,
   WithdrawAccountDto,

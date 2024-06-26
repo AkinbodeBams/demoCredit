@@ -70,6 +70,12 @@ class ConflictError extends ApplicationError {
     this.name = "ConflictError";
   }
 }
+class ForbiddenError extends ApplicationError {
+  constructor(message: string) {
+    super(message, 403, "ForbiddenError");
+    this.name = "ForbiddenError";
+  }
+}
 
 export default {
   NotFoundError,
@@ -80,4 +86,5 @@ export default {
   InsufficientBalanceError,
   UnauthorizedError,
   ConflictError,
+  ForbiddenError,
 };

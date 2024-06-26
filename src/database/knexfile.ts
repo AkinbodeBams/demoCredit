@@ -1,8 +1,7 @@
+import "dotenv/config";
 import { Knex } from "knex";
 import path from "path";
 import { envStore } from "../envStore";
-
-console.log(path.resolve(__dirname, "migrations"));
 
 const knexConfig: { [key: string]: Knex.Config } = {
   development: {

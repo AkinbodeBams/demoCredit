@@ -1,10 +1,12 @@
 import { EnvStore } from "./types";
+import dotenv from "dotenv";
 
+dotenv.config();
 const envStore: EnvStore = {
   DB_HOST: "127.0.0.1",
   DB_PORT: "3306",
   DB_USERNAME: "root",
-  DB_PASSWORD: process.env.DB_PASSWORD || "",
+  DB_PASSWORD: process.env.DB_PASSWORD as string,
   DB_NAME: "demo_credit",
   APP_ENV: "development",
   adjutorApi: "",

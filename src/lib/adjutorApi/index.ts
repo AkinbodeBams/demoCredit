@@ -18,8 +18,8 @@ class AdjutorApi {
 
   public async checkCustomerKarma(
     bvn: string,
-    phoneNumber?: string,
-    email?: string
+    phoneNumber?: string | null,
+    email?: string | null
   ): Promise<boolean> {
     const endpoints = [
       { type: "bvn", value: bvn },
@@ -45,4 +45,4 @@ class AdjutorApi {
   }
 }
 
-export default AdjutorApi;
+export default new AdjutorApi();

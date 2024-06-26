@@ -1,4 +1,6 @@
-// src/database/index.ts
+import dotenv from "dotenv";
+
+dotenv.config();
 import Knex, { Knex as KnexType } from "knex";
 import { Model } from "objection";
 import { envStore } from "../envStore";

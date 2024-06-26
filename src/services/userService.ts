@@ -1,10 +1,11 @@
 import { CreateAccountDto, CreateUserDto } from "../dto";
 import { accountDao, userDao } from "../database/dao";
-import { httpErrors } from "../lib/errorHandler";
 import { v4 as uuidv4 } from "uuid";
 import { findUserWithAccountByUserId } from "../database/dao/userDao";
 import accountService from "./accountService";
 import { generateToken } from "../reusables";
+import adjutorApi from "../lib/adjutorApi";
+import { errorResponseMessage as errMsg, httpErrors } from "../lib";
 
 const generateUniqueAccountNumber = async (): Promise<string> => {
   let unique = false;
@@ -28,6 +29,16 @@ const generateUniqueAccountNumber = async (): Promise<string> => {
 
 const createUser = async (dto: CreateUserDto) => {
   const userId = uuidv4();
+
+  const isBlackListed = await adjutorApi.checkCustomerKarma(
+    dto.bvn,
+    dto.phoneNumber,
+    dto.email
+  );
+  if (isBlackListed) {
+    throw new httpErrors.ForbiddenError(errMsg.USER_BLACKLISTED);
+  }
+
   try {
     const user = await userDao.createUser({
       id: userId,
@@ -35,6 +46,7 @@ const createUser = async (dto: CreateUserDto) => {
       lastName: dto.lastName,
       email: dto.email || null,
       phoneNumber: dto.phoneNumber || null,
+      domain: dto.domain || null,
       bvn: dto.bvn,
     });
 
