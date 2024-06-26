@@ -66,17 +66,15 @@ export class FundAndWithdrawAccountDto {
 }
 
 export class TransferFundDto {
-  constructor(sender: string, recipient: string) {
-    this.sender = sender;
-    this.recipient = recipient;
+  constructor(recipientAccountNumber: string) {
+    this.recipientAccountNumber = recipientAccountNumber;
   }
   @IsNotEmpty()
   @IsString()
   @Length(10, 10, {
     message: "Account number must be exactly 10 characters long",
   })
-  sender!: string;
-  recipient!: string;
+  recipientAccountNumber!: string;
 
   @IsNotEmpty()
   @Min(0.5) // changeable

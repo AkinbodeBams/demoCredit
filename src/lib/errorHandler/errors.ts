@@ -64,6 +64,13 @@ class InsufficientBalanceError extends ApplicationError {
   }
 }
 
+class ConflictError extends ApplicationError {
+  constructor(message: string) {
+    super(message, 409, "ConflictError");
+    this.name = "ConflictError";
+  }
+}
+
 export default {
   NotFoundError,
   InternalError,
@@ -72,4 +79,5 @@ export default {
   InternalServerError,
   InsufficientBalanceError,
   UnauthorizedError,
+  ConflictError,
 };
