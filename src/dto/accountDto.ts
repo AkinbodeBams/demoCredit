@@ -71,8 +71,7 @@ export class FundDto {
   source!: "loan" | "external";
 }
 export class WithdrawAccountDto {
-  constructor(accountNumber: string, amount: number) {
-    this.accountNumber = accountNumber;
+  constructor(amount: number) {
     this.amount = amount;
   }
   @IsNotEmpty()
@@ -84,14 +83,6 @@ export class WithdrawAccountDto {
   })
   @IsNumber()
   amount!: number;
-
-  @IsNotEmpty()
-  @IsString()
-  @Length(10, 10, {
-    message: "Account number must be exactly 10 characters long",
-  })
-  @Matches(/^\d+$/, { message: "Account number must contain only numbers" })
-  accountNumber!: string;
 }
 
 export class TransferFundDto {

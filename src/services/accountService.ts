@@ -24,11 +24,10 @@ const createAccount = async (dto: CreateAccountDto): Promise<Account> => {
   }
 };
 
-const fundAccount = async (req: Request): Promise<any> => {
-  const { amount, source } = req.body as FundDto;
+const fundAccount = async (req: Request, dto: FundDto): Promise<any> => {
+  const { amount, source } = dto;
   const user = req.user;
   if (!user) return;
-  console.log(user);
 
   try {
     return transaction(Account.knex(), async (trx) => {
@@ -43,7 +42,6 @@ const fundAccount = async (req: Request): Promise<any> => {
       }
       const newBalance = Number(account.balance) + amount;
       await account.$query(trx).patchAndFetch({ balance: newBalance });
-      // const fullName = updatedAccount.f
       return {
         data: {
           message: `Account funded from ${source}, balance is now ${newBalance}`,
@@ -57,12 +55,18 @@ const fundAccount = async (req: Request): Promise<any> => {
   }
 };
 
-const withdrawFund = async (req: Request): Promise<any> => {
-  const { accountNumber, amount } = req.body as WithdrawAccountDto;
+const withdrawFund = async (
+  req: Request,
+  dto: WithdrawAccountDto
+): Promise<any> => {
+  const { amount } = dto;
+  const user = req.user;
+  if (!user) return;
+
   try {
     return transaction(Account.knex(), async (trx) => {
       const account = await accountDao.getAccountByAccountNumber(
-        accountNumber,
+        user.id as string,
         trx
       );
       if (!account) {
@@ -93,8 +97,11 @@ const withdrawFund = async (req: Request): Promise<any> => {
   }
 };
 
-const transferFund = async (req: Request): Promise<any> => {
-  const { recipientAccountNumber, amount } = req.body as TransferFundDto;
+const transferFund = async (
+  req: Request,
+  dto: TransferFundDto
+): Promise<any> => {
+  const { recipientAccountNumber, amount } = dto;
   const sender = req.user as string;
   try {
     return transaction(Account.knex(), async (trx) => {

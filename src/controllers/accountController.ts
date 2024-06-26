@@ -6,7 +6,7 @@ import { errorResponse, successResponse } from "../lib/httpResponse";
 
 const fundAccount = async (req: Request, res: Response) => {
   const dto = await validate<FundDto>({ ...req.body }, FundDto);
-  const response = await accountService.fundAccount(req);
+  const response = await accountService.fundAccount(req, dto);
 
   if (!response.data) {
     return errorResponse({ ...response, res });
@@ -19,7 +19,8 @@ const withdrawFund = async (req: Request, res: Response) => {
     { ...req.body },
     WithdrawAccountDto
   );
-  const response = await accountService.withdrawFund(req);
+
+  const response = await accountService.withdrawFund(req, dto);
   if (!response.data) {
     return errorResponse({ ...response, res });
   }
