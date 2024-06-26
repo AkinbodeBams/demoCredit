@@ -5,6 +5,6 @@ import { authToken } from "../lib/middlewares";
 const router = Router();
 router.post("/fund-account", authToken, accountController.fundAccount);
 router.post("/withdraw-fund", authToken, accountController.withdrawFund);
-router.post("/transfer", accountController.withdrawFund);
+router.post("/transfer-fund", authToken, accountController.transferFund);
 
 export default router;

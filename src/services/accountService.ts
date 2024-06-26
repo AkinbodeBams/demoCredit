@@ -103,11 +103,11 @@ const transferFund = async (
   dto: TransferFundDto
 ): Promise<any> => {
   const { recipientAccountNumber, amount } = dto;
-  const sender = req.user as string;
+  const sender = req.user!.id as string;
   try {
     return transaction(Account.knex(), async (trx) => {
       const [fromAccount, toAccount] = await Promise.all([
-        accountDao.getAccountByAccountNumber(sender, trx),
+        accountDao.getAccountByUserId(sender, trx),
         accountDao.getAccountByAccountNumber(recipientAccountNumber, trx),
       ]);
 
@@ -116,9 +116,14 @@ const transferFund = async (
           `${errMsg.TRANSFER_ERROR}: ${errMsg.ACCOUNT_NOT_FOUND}`
         );
       }
-      if (fromAccount === toAccount) {
+      if (fromAccount!.id === toAccount.id) {
         throw new httpErrors.ConflictError(
           `${errMsg.TRANSFER_ERROR}: ${errMsg.ACCOUNT_CONFLICT_ERROR}`
+        );
+      }
+      if (fromAccount.balance < amount) {
+        throw new httpErrors.InsufficientBalanceError(
+          `${errMsg.TRANSFER_ERROR}: ${errMsg.INSUFFICIENT_BALANCE_ERROR}`
         );
       }
 

@@ -14,7 +14,7 @@ export enum errorResponseMessage {
   WITHDRAW_ERROR = "Error withdrawing fund",
   FUND_ERROR = "Error funding account",
 
-  INSUFFICIENT_BALANCE_ERROR = "Insufficient balance for withdrawal",
+  INSUFFICIENT_BALANCE_ERROR = "Insufficient balance",
 
   TRANSFER_ERROR = "Error transferring funds",
   ACCOUNT_CONFLICT_ERROR = "You cannot transfer funds to account of the same account",
