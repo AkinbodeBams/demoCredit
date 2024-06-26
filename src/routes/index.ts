@@ -4,6 +4,7 @@ import { httpErrors } from "../lib/errorHandler";
 import { applicationMessages, successResponse } from "../lib/httpResponse";
 import userRouter from "./userRoutes";
 import accountRouter from "./accountRoutes";
+import authRouter from "./authRoutes";
 
 const router = Router();
 router.get("/", (req: Request, res: Response) =>
@@ -20,6 +21,7 @@ router.get("/health-status", (req: Request, res: Response) => {
 
 router.use("/user", userRouter);
 router.use("/account", accountRouter);
+router.use("/auth", authRouter);
 
 router.all("*", (req: Request, res: Response) => {
   throw new httpErrors.NotFoundError(

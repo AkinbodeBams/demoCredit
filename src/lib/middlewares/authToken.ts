@@ -1,13 +1,13 @@
 // middleware/authMiddleware.ts
 import { RequestHandler } from "express";
 import { validate } from "../validator";
-import { AuthDto } from "../../dto/authDto";
 import { errorResponseMessage as errMsg, httpErrors } from "../../lib";
 import { userDao } from "../../database/dao";
+import { tokenDto } from "../../dto/authDto";
 
 export const authToken: RequestHandler = async (req, res, next) => {
   const token = req.headers.authorization;
-  const dto = await validate<AuthDto>({ token }, AuthDto);
+  const dto = await validate<tokenDto>({ token }, tokenDto);
   const splitToken = dto.token.split("-");
   const [bvn, expiry] = splitToken;
   const user = await userDao.findByBvn(bvn);
