@@ -4,6 +4,7 @@ import { httpErrors } from "../lib/errorHandler";
 import { v4 as uuidv4 } from "uuid";
 import { findUserWithAccountByUserId } from "../database/dao/userDao";
 import accountService from "./accountService";
+import { generateToken } from "../reusables";
 
 const generateUniqueAccountNumber = async (): Promise<string> => {
   let unique = false;
@@ -39,11 +40,12 @@ const createUser = async (dto: CreateUserDto) => {
 
     const accountNumber = await generateUniqueAccountNumber();
     const accountDto = new CreateAccountDto(user.id, accountNumber);
-    await accountService.createAccount(accountDto);
+    const newData = await accountService.createAccount(accountDto);
 
     const data = await findUserWithAccountByUserId(user.id);
+    const token = generateToken(dto.bvn);
 
-    return { data };
+    return { data: { ...data, token } };
   } catch (error) {
     if (error instanceof httpErrors.ValidationError) {
       throw error;

@@ -1,11 +1,7 @@
 import { transaction } from "objection";
 import { accountDao } from "../database/dao";
 import { Account } from "../database/models";
-import {
-  CreateAccountDto,
-  FundAndWithdrawAccountDto,
-  TransferFundDto,
-} from "../dto";
+import { CreateAccountDto, FundAndWithdrawAccountDto } from "../dto";
 import { errorResponseMessage as errMsg, httpErrors } from "../lib";
 
 const createAccount = async (dto: CreateAccountDto): Promise<Account> => {

@@ -1,8 +1,9 @@
 import { Router } from "express";
 import { accountController } from "../controllers";
+import { authToken } from "../lib/middlewares";
 
 const router = Router();
-router.post("/fund-account", accountController.fundAccount);
+router.post("/fund-account", authToken, accountController.fundAccount);
 router.post("/withdraw-fund", accountController.withdrawFund);
 
 export default router;

@@ -19,7 +19,8 @@ export const findUserWithAccountByUserId = async (
   return user;
 };
 const findById = async (id: string): Promise<User | undefined> => {
-  return User.query().findById(id).select("id");
+  const user = User.query().findById(id).select("id");
+  return user;
 };
 
 const findByEmail = async (email: string): Promise<User | undefined> => {
