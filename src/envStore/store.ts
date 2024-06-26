@@ -1,15 +1,19 @@
 import { EnvStore } from "./types";
 import dotenv from "dotenv";
 
+// Load environment variables from .env file
 dotenv.config();
+
+console.log("Environment variables loaded:", process.env); // Log all environment variables to debug
+
 const envStore: EnvStore = {
   DB_HOST: "127.0.0.1",
   DB_PORT: "3306",
   DB_USERNAME: "root",
-  DB_PASSWORD: process.env.DB_PASSWORD as string,
+  DB_PASSWORD: process.env.DB_PASSWORD || "",
   DB_NAME: "demo_credit",
   APP_ENV: "development",
-  adjutorApi: "",
+  adjutorApi: process.env.adjutorApi || "",
 };
 
 const setEnvStoreFromEnvironment = () => {
