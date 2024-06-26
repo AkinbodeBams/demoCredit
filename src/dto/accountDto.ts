@@ -6,6 +6,7 @@ import {
   IsOptional,
   Min,
   IsNumber,
+  IsEnum,
 } from "class-validator";
 import { updateAccountDto } from "./types";
 
@@ -46,6 +47,23 @@ export class UpdateAccountDtoClass implements updateAccountDto {
   }
 }
 
+export class FundDto {
+  constructor(source: "loan" | "external", amount: number) {
+    this.source = source;
+    this.amount = amount;
+  }
+
+  @IsNotEmpty()
+  @Min(0.5) // changeable
+  @IsNumber()
+  amount!: number;
+
+  @IsNotEmpty()
+  @IsEnum(["loan", "external"], {
+    message: "source must be either loan or external",
+  })
+  source!: "loan" | "external";
+}
 export class FundAndWithdrawAccountDto {
   constructor(accountNumber: string, amount: number) {
     this.accountNumber = accountNumber;

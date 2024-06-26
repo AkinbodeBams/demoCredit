@@ -18,6 +18,19 @@ export const findUserWithAccountByUserId = async (
 
   return user;
 };
+export const findUserWithAccountByUserBvn = async (
+  bvn: string
+): Promise<User | undefined> => {
+  const user = await User.query()
+    .findById(bvn)
+    .withGraphFetched("account")
+    .modifyGraph("account", (builder) => {
+      builder.select("accountNumber");
+    })
+    .select("firstName", "lastName", "id");
+
+  return user;
+};
 const findById = async (id: string): Promise<User | undefined> => {
   const user = User.query().findById(id).select("id");
   return user;
@@ -47,4 +60,5 @@ export default {
   findByEmail,
   findByPhoneNumber,
   findById,
+  findUserWithAccountByUserBvn,
 };

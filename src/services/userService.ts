@@ -40,12 +40,14 @@ const createUser = async (dto: CreateUserDto) => {
 
     const accountNumber = await generateUniqueAccountNumber();
     const accountDto = new CreateAccountDto(user.id, accountNumber);
-    const newData = await accountService.createAccount(accountDto);
+    await accountService.createAccount(accountDto);
 
     const data = await findUserWithAccountByUserId(user.id);
     const token = generateToken(dto.bvn);
 
-    return { data: { ...data, token } };
+    const responseData = { ...data, sessionToken: token };
+
+    return { data: { ...responseData } };
   } catch (error) {
     if (error instanceof httpErrors.ValidationError) {
       throw error;

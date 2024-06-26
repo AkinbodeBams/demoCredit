@@ -13,9 +13,10 @@ const createAccount = async (data: CreateAccountDto): Promise<Account> => {
 };
 
 const getAccountByUserId = async (
-  userId: string
+  userId: string,
+  trx?: Transaction
 ): Promise<Account | undefined> => {
-  return await Account.query().where("userId", userId).first();
+  return await Account.query(trx).where("userId", userId).first();
 };
 
 const getAccountByAccountNumber = async (

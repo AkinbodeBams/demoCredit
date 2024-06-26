@@ -1,15 +1,12 @@
 import { Request, Response } from "express";
 import { validate } from "../lib/validator";
-import { FundAndWithdrawAccountDto } from "../dto";
+import { FundAndWithdrawAccountDto, FundDto } from "../dto";
 import { accountService } from "../services";
 import { errorResponse, successResponse } from "../lib/httpResponse";
 
 const fundAccount = async (req: Request, res: Response) => {
-  const dto = await validate<FundAndWithdrawAccountDto>(
-    { ...req.body },
-    FundAndWithdrawAccountDto
-  );
-  const response = await accountService.fundAccount(dto);
+  const dto = await validate<FundDto>({ ...req.body }, FundDto);
+  const response = await accountService.fundAccount(req);
 
   if (!response.data) {
     return errorResponse({ ...response, res });
@@ -22,7 +19,7 @@ const withdrawFund = async (req: Request, res: Response) => {
     { ...req.body },
     FundAndWithdrawAccountDto
   );
-  const response = await accountService.withdrawFund(dto);
+  const response = await accountService.withdrawFund(req);
   if (!response.data) {
     return errorResponse({ ...response, res });
   }
