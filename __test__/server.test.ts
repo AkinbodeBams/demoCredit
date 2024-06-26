@@ -1,5 +1,6 @@
 import http from "http";
 import app from "../src/app";
+import request from "supertest";
 
 describe("Server", () => {
   let server: http.Server;
@@ -27,5 +28,12 @@ describe("Server", () => {
       new Error("Test error"),
       Promise.resolve()
     );
+  });
+
+  describe("should handle invalid url", () => {
+    it("should respond with 404 for an invalid URL", async () => {
+      const response = await request(app).get("/invalid-url");
+      expect(response.status).toBe(404);
+    });
   });
 });
