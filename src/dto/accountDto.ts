@@ -9,7 +9,7 @@ import {
   IsEnum,
   Max,
 } from "class-validator";
-import { updateAccountDto } from "./types";
+import { source, updateAccountDto } from "./types";
 
 export class CreateAccountDto {
   constructor(userId: string, accountNumber: string) {
@@ -49,7 +49,7 @@ export class UpdateAccountDtoClass implements updateAccountDto {
 }
 
 export class FundDto {
-  constructor(source: "loan" | "external", amount: number) {
+  constructor(source: source, amount: number) {
     this.source = source;
     this.amount = amount;
   }
@@ -65,10 +65,10 @@ export class FundDto {
   amount!: number;
 
   @IsNotEmpty()
-  @IsEnum(["loan", "external"], {
-    message: "source must be either loan or external",
+  @IsEnum(["loan", "transfer", "others"], {
+    message: "source must be either loan, transfer, others",
   })
-  source!: "loan" | "external";
+  source!: source;
 }
 export class WithdrawAccountDto {
   constructor(amount: number) {

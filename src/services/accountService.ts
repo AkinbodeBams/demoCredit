@@ -61,14 +61,16 @@ const withdrawFund = async (
 ): Promise<any> => {
   const { amount } = dto;
   const user = req.user;
-  if (!user) return;
+  // if (!user) return;
 
   try {
     return transaction(Account.knex(), async (trx) => {
-      const account = await accountDao.getAccountByAccountNumber(
-        user.id as string,
+      const account = await accountDao.getAccountByUserId(
+        user!.id as string,
         trx
       );
+      console.log(account);
+
       if (!account) {
         throw new httpErrors.NotFoundError(
           `${errMsg.WITHDRAW_ERROR}: ${errMsg.ACCOUNT_NOT_FOUND}`
@@ -85,8 +87,7 @@ const withdrawFund = async (
         .patchAndFetch({ balance: newBalance });
       return {
         data: {
-          balance: updatedAccount.balance,
-          userId: updatedAccount.userId,
+          message: `Withdrew fund from Account, balance is now ${newBalance}`,
         },
       };
     });
