@@ -5,12 +5,12 @@ class AdjutorApi {
   private baseURL: string;
   private axiosInstance: AxiosInstance;
 
-  constructor(bearerToken: string) {
+  constructor() {
     this.baseURL = "https://adjutor.lendsqr.com/v2/";
     this.axiosInstance = axios.create({
       baseURL: this.baseURL,
       headers: {
-        Authorization: `Bearer ${bearerToken}`,
+        Authorization: `Bearer ${envStore.adjutorApi}`,
         "Content-Type": "application/json",
       },
     });
@@ -27,28 +27,21 @@ class AdjutorApi {
       { type: "email", value: email },
     ].filter((endpoint) => endpoint.value);
 
-    const requests = endpoints.map((endpoint) =>
-      this.axiosInstance
-        .post(`verification/karma/${endpoint.value}`, {
+    for (const endpoint of endpoints) {
+      try {
+        await this.axiosInstance.post(`verification/karma/${endpoint.value}`, {
           [endpoint.type]: endpoint.value,
-        })
-        .catch((error) => {
-          if (error.response && error.response.status === 404) {
-            return null;
-          } else {
-            throw error;
-          }
-        })
-    );
-
-    const results = await Promise.all(requests);
-    const validResult = results.find((result) => result !== null);
-
-    if (validResult) {
-      return true;
-    } else {
-      return false;
+        });
+        return true; // Return true immediately if any request is successful
+      } catch (error) {
+        if (error.response && error.response.status !== 404) {
+          throw error; // Throw error for non-404 errors
+        }
+        // Continue to the next endpoint if the error is 404
+      }
     }
+
+    return false; // Return false if none of the requests were successful
   }
 }
 

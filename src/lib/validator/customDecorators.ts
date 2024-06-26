@@ -4,6 +4,7 @@ import {
   registerDecorator,
 } from "class-validator";
 import {
+  IsDomainConstraint,
   IsNigerianPhoneNumberConstraint,
   IsUniqueBvnConstraint,
   IsUniqueEmailConstraint,
@@ -84,6 +85,17 @@ export function IsNigerianPhoneNumber(validationOptions?: ValidationOptions) {
       options: validationOptions,
       constraints: [],
       validator: IsNigerianPhoneNumberConstraint,
+    });
+  };
+}
+export function IsDomain(validationOptions?: ValidationOptions) {
+  return function (object: Object, propertyName: string) {
+    registerDecorator({
+      target: object.constructor,
+      propertyName: propertyName,
+      options: validationOptions,
+      constraints: [],
+      validator: IsDomainConstraint,
     });
   };
 }

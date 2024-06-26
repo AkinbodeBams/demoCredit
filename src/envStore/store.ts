@@ -4,9 +4,10 @@ const envStore: EnvStore = {
   DB_HOST: "127.0.0.1",
   DB_PORT: "3306",
   DB_USERNAME: "root",
-  DB_PASSWORD: "icui4cu4u",
+  DB_PASSWORD: process.env.DB_PASSWORD || "",
   DB_NAME: "demo_credit",
   APP_ENV: "development",
+  adjutorApi: "",
 };
 
 const setEnvStoreFromEnvironment = () => {

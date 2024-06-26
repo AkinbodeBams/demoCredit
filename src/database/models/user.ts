@@ -1,8 +1,8 @@
-import { Model } from 'objection';
-import Account from './account';
+import { Model } from "objection";
+import Account from "./account";
 
 export default class User extends Model {
-  static tableName = 'users';
+  static tableName = "users";
 
   id!: string;
   firstName!: string;
@@ -12,6 +12,7 @@ export default class User extends Model {
   bvn!: string;
   createdAt!: string;
   updatedAt!: string;
+  domain: string | null = null;
 
   account?: Account;
 
@@ -20,24 +21,25 @@ export default class User extends Model {
       relation: Model.HasOneRelation,
       modelClass: Account,
       join: {
-        from: 'users.id',
-        to: 'accounts.userId',
+        from: "users.id",
+        to: "accounts.userId",
       },
     },
   };
 
   static get jsonSchema() {
     return {
-      type: 'object',
+      type: "object",
       properties: {
-        id: { type: 'string' },
-        email: { type: ['string', 'null'] },
-        phoneNumber: { type: ['string', 'null'] },
-        bvn: { type: 'string', minLength: 11, maxLength: 11 },
-        firstName: { type: 'string' },
-        lastName: { type: 'string' },
-        createdAt: { type: 'string' },
-        updatedAt: { type: 'string' },
+        id: { type: "string" },
+        firstName: { type: "string" },
+        lastName: { type: "string" },
+        email: { type: ["string", "null"] },
+        phoneNumber: { type: ["string", "null"] },
+        domain: { type: ["string", "null"] },
+        bvn: { type: "string", minLength: 11, maxLength: 11 },
+        createdAt: { type: "string" },
+        updatedAt: { type: "string" },
       },
     };
   }

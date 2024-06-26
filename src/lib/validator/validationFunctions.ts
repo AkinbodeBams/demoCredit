@@ -95,3 +95,15 @@ export class IsNigerianPhoneNumberConstraint
     return "Invalid phone number";
   }
 }
+
+@ValidatorConstraint({ async: false })
+export class IsDomainConstraint implements ValidatorConstraintInterface {
+  validate(domain: string, args: ValidationArguments) {
+    if (!domain) return true;
+    const domainRegex = /^[a-zA-Z0-9-]+\.[a-zA-Z]{2,}$/;
+    return domainRegex.test(domain);
+  }
+  defaultMessage(args: ValidationArguments) {
+    return "Invalid domain";
+  }
+}

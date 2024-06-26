@@ -8,6 +8,7 @@ import {
 } from "class-validator";
 
 import {
+  IsDomain,
   IsNigerianPhoneNumber,
   IsUniqueBvn,
   IsUniqueEmail,
@@ -41,6 +42,11 @@ export class CreateUserDto {
   @IsNigerianPhoneNumber({ message: "Invalid phone number" })
   @IsUniquePhoneNumber({ message: "Phone number already exists" })
   phoneNumber?: string | null;
+
+  @IsOptional()
+  @IsString()
+  @IsDomain({ message: "Invalid domain" })
+  domain?: string | null;
 
   @OneOf(["email", "phoneNumber"], {
     message: "At least one of email or phone number must be provided",
