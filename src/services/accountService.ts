@@ -42,6 +42,7 @@ const fundAccount = async (req: Request, dto: FundDto): Promise<any> => {
       }
       const newBalance = Number(account.balance) + amount;
       await account.$query(trx).patchAndFetch({ balance: newBalance });
+     
       return {
         data: {
           message: `Account funded from ${source}, balance is now ${newBalance}`,

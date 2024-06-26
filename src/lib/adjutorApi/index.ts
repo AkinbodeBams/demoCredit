@@ -1,23 +1,15 @@
-import axios, { AxiosInstance } from "axios";
 import { envStore } from "../../envStore";
 
 class AdjutorApi {
   private baseURL: string;
-  private axiosInstance: AxiosInstance;
 
   constructor() {
     this.baseURL = "https://adjutor.lendsqr.com/v2/";
-    this.axiosInstance = axios.create({
-      baseURL: this.baseURL,
-      headers: {
-        Authorization: `Bearer ${envStore.adjutorApi}`,
-        "Content-Type": "application/json",
-      },
-    });
   }
 
   public async checkCustomerKarma(
-    bvn: string,
+    domain?: string | null,
+    bvn?: string,
     phoneNumber?: string | null,
     email?: string | null
   ): Promise<boolean> {
@@ -25,23 +17,31 @@ class AdjutorApi {
       { type: "bvn", value: bvn },
       { type: "phoneNumber", value: phoneNumber },
       { type: "email", value: email },
+      { type: "domain", value: domain },
     ].filter((endpoint) => endpoint.value);
-
     for (const endpoint of endpoints) {
       try {
-        await this.axiosInstance.post(`verification/karma/${endpoint.value}`, {
-          [endpoint.type]: endpoint.value,
-        });
-        return true; // Return true immediately if any request is successful
-      } catch (error) {
-        if (error.response && error.response.status !== 404) {
-          throw error; // Throw error for non-404 errors
+        const response = await fetch(
+          `${this.baseURL}verification/karma/${endpoint.value}`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${envStore.adjutorApi}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
         }
-        // Continue to the next endpoint if the error is 404
+        const data = await response.json();
+        return true;
+      } catch (error) {
+        console.error("Error:", error);
       }
     }
 
-    return false; // Return false if none of the requests were successful
+    return false;
   }
 }
 

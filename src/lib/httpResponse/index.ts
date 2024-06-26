@@ -29,6 +29,7 @@ export const successResponse = ({
   message,
 }: successResponseInputType) => {
   const responseBody = {
+    status: "success",
     ...(message && { message }),
     data: data || {},
   };
@@ -46,6 +47,7 @@ export const errorResponse = ({
   const errorCode = code || "error";
   const responseBody = {
     code: errorCode,
+    status: "failed",
     message: responseMessage,
   };
 

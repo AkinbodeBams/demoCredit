@@ -1,5 +1,6 @@
 export enum successResponseMessage {
   DEFAULT = "The request was successful",
+  USER_CREATED = "Account was created",
 }
 
 export enum errorResponseMessage {
@@ -8,6 +9,7 @@ export enum errorResponseMessage {
   NO_TOKEN = "No token Provided",
   TOKEN_EXPIRED = "Token has expired",
 
+  ACCOUNT_CREATION_ERROR = "Error creating account",
   ACCOUNT_NOT_FOUND = "Account not found",
   USER_NOT_FOUND = "User not found",
   USER_BLACKLISTED = "User has been blacklisted",

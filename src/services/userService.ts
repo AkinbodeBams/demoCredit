@@ -5,7 +5,11 @@ import { findUserWithAccountByUserId } from "../database/dao/userDao";
 import accountService from "./accountService";
 import { generateToken } from "../reusables";
 import adjutorApi from "../lib/adjutorApi";
-import { errorResponseMessage as errMsg, httpErrors } from "../lib";
+import {
+  errorResponseMessage as errMsg,
+  httpErrors,
+  successResponseMessage as successMsg,
+} from "../lib";
 
 const generateUniqueAccountNumber = async (): Promise<string> => {
   let unique = false;
@@ -30,16 +34,17 @@ const generateUniqueAccountNumber = async (): Promise<string> => {
 const createUser = async (dto: CreateUserDto) => {
   const userId = uuidv4();
 
-  const isBlackListed = await adjutorApi.checkCustomerKarma(
-    dto.bvn,
-    dto.phoneNumber,
-    dto.email
-  );
-  if (isBlackListed) {
-    throw new httpErrors.ForbiddenError(errMsg.USER_BLACKLISTED);
-  }
-
   try {
+    const isBlackListed = await adjutorApi.checkCustomerKarma(
+      dto.domain,
+      dto.bvn,
+      dto.phoneNumber,
+      dto.email
+    );
+
+    if (isBlackListed) {
+      throw new httpErrors.ForbiddenError(errMsg.USER_BLACKLISTED);
+    }
     const user = await userDao.createUser({
       id: userId,
       firstName: dto.firstName,
@@ -59,13 +64,13 @@ const createUser = async (dto: CreateUserDto) => {
 
     const responseData = { ...data, sessionToken: token };
 
-    return { data: { ...responseData } };
+    return { data: responseData };
   } catch (error) {
     if (error instanceof httpErrors.ValidationError) {
       throw error;
     } else {
       throw new httpErrors.InternalServerError(
-        "Error creating user: " + error.message
+        `${errMsg.ACCOUNT_CREATION_ERROR}`
       );
     }
   }

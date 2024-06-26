@@ -1,12 +1,10 @@
-import dotenv from "dotenv";
-
-dotenv.config();
 import Knex, { Knex as KnexType } from "knex";
 import { Model } from "objection";
-import { envStore } from "../envStore";
+import { configureEnv, envStore } from "../envStore";
 import knexConfig from "./knexfile";
 
-export function initializeDatabase(): Promise<KnexType> {
+export async function initializeDatabase(): Promise<KnexType> {
+  await configureEnv();
   const config = knexConfig[envStore.APP_ENV];
   const knex = Knex(config);
   Model.knex(knex);
