@@ -3,7 +3,7 @@ import { accountDao } from "../database/dao";
 import { Account, User } from "../database/models";
 import {
   CreateAccountDto,
-  FundAndWithdrawAccountDto,
+  WithdrawAccountDto,
   FundDto,
   TransferFundDto,
 } from "../dto";
@@ -58,7 +58,7 @@ const fundAccount = async (req: Request): Promise<any> => {
 };
 
 const withdrawFund = async (req: Request): Promise<any> => {
-  const { accountNumber, amount } = req.body as FundAndWithdrawAccountDto;
+  const { accountNumber, amount } = req.body as WithdrawAccountDto;
   try {
     return transaction(Account.knex(), async (trx) => {
       const account = await accountDao.getAccountByAccountNumber(

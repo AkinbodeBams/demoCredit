@@ -7,6 +7,7 @@ import {
   Min,
   IsNumber,
   IsEnum,
+  Max,
 } from "class-validator";
 import { updateAccountDto } from "./types";
 
@@ -54,7 +55,12 @@ export class FundDto {
   }
 
   @IsNotEmpty()
-  @Min(0.5) // changeable
+  @Min(50, {
+    message: "amount must be between 50 and 10,000,000,000 Naira",
+  })
+  @Max(10000000000, {
+    message: "amount must be between 50 and 10,000,000,000 Naira",
+  })
   @IsNumber()
   amount!: number;
 
@@ -64,13 +70,18 @@ export class FundDto {
   })
   source!: "loan" | "external";
 }
-export class FundAndWithdrawAccountDto {
+export class WithdrawAccountDto {
   constructor(accountNumber: string, amount: number) {
     this.accountNumber = accountNumber;
     this.amount = amount;
   }
   @IsNotEmpty()
-  @Min(0.5) // changeable
+  @Min(50, {
+    message: "amount must be between 50 and 10,000,000,000 Naira",
+  })
+  @Max(10000000000, {
+    message: "amount must be between 50 and 10,000,000,000 Naira",
+  })
   @IsNumber()
   amount!: number;
 
@@ -95,7 +106,12 @@ export class TransferFundDto {
   recipientAccountNumber!: string;
 
   @IsNotEmpty()
-  @Min(0.5) // changeable
+  @Min(50, {
+    message: "amount must be between 50 and 10,000,000,000 Naira",
+  })
+  @Max(10000000000, {
+    message: "amount must be between 50 and 10,000,000,000 Naira",
+  })
   @IsNumber()
   amount!: number;
 }
