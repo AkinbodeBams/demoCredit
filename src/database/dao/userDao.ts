@@ -61,4 +61,5 @@ export default {
   findByPhoneNumber,
   findById,
   findUserWithAccountByUserBvn,
+  findUserWithAccountByUserId,
 };

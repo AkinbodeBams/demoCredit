@@ -45,6 +45,7 @@ const createUser = async (dto: CreateUserDto) => {
     if (isBlackListed) {
       throw new httpErrors.ForbiddenError(errMsg.USER_BLACKLISTED);
     }
+
     const user = await userDao.createUser({
       id: userId,
       firstName: dto.firstName,
@@ -67,6 +68,8 @@ const createUser = async (dto: CreateUserDto) => {
     return { data: responseData };
   } catch (error) {
     if (error instanceof httpErrors.ValidationError) {
+      throw error;
+    } else if (error instanceof httpErrors.ForbiddenError) {
       throw error;
     } else {
       throw new httpErrors.InternalServerError(

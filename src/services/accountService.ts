@@ -41,8 +41,8 @@ const fundAccount = async (req: Request, dto: FundDto): Promise<any> => {
         );
       }
       const newBalance = Number(account.balance) + amount;
-      await account.$query(trx).patchAndFetch({ balance: newBalance });
-     
+      await account.$query(trx).patch({ balance: newBalance });
+
       return {
         data: {
           message: `Account funded from ${source}, balance is now ${newBalance}`,
@@ -85,7 +85,7 @@ const withdrawFund = async (
       const newBalance = Number(account.balance) - amount;
       const updatedAccount = await account
         .$query(trx)
-        .patchAndFetch({ balance: newBalance });
+        .patch({ balance: newBalance });
       return {
         data: {
           message: `Withdrew fund from Account, balance is now ${newBalance}`,
