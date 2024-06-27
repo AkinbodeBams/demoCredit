@@ -4,10 +4,11 @@ import { Knex } from "knex";
 import path from "path";
 
 const connection = {
-  host: "localhost",
-  user: "root",
-  password: "icui4cu4u",
-  database: "demo_credit",
+  host: process.env.DB_HOST || "localhost",
+  port: parseInt(process.env.DB_PORT || "3306"),
+  user: process.env.DB_USER || "root",
+  password: process.env.DB_PASSWORD || "",
+  database: process.env.DB_DATABASE || "mydatabase",
 };
 
 const knexConfig: { [key: string]: Knex.Config } = {
