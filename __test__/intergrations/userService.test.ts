@@ -156,14 +156,5 @@ describe("userService", () => {
         errMsg.ACCOUNT_CREATION_ERROR
       );
     });
-
-    // it("should throw a ValidationError if DTO validation fails", async () => {
-    //   // Modify the DTO to trigger validation errors
-    //   dto.bvn = "invalid-bvn"; // Example of an invalid BVN
-
-    //   await expect(userService.createUser(dto)).rejects.toThrow(
-    //     httpErrors.ValidationError
-    //   );
-    // });
   });
 });
