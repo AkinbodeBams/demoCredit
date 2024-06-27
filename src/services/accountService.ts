@@ -1,6 +1,6 @@
 import { transaction } from "objection";
-import { accountDao } from "../database/dao";
-import { Account } from "../database/models";
+import { accountDao, userDao } from "../database/dao";
+import { Account, User } from "../database/models";
 import {
   CreateAccountDto,
   WithdrawAccountDto,
@@ -134,7 +134,14 @@ const transferFund = async (
       await fromAccount.$query(trx).patch({ balance: newFromBalance });
       await toAccount.$query(trx).patch({ balance: newToBalance });
 
-      return { data: { balance: newFromBalance } };
+      const recipient = (await userDao.findById(toAccount.userId)) as User;
+      console.log(recipient);
+
+      return {
+        data: {
+          message: `Transfer of #${amount} to ${recipient.firstName} ${recipient.lastName} Successful`,
+        },
+      };
     });
   } catch (error) {
     throw new httpErrors.InternalServerError(

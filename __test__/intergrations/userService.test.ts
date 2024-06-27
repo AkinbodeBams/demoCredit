@@ -1,22 +1,30 @@
-// src/__tests__/userService.test.ts
+// __test__/intergrations/userService.test.ts
+
+import { initializeDatabase } from "../../src/database"; // Adjust path if necessary
 import userService from "../../src/services/userService";
 import { CreateUserDto } from "../../src/dto";
-import { userDao, accountDao } from "../../src/database/dao";
-import accountService from "../../src/services/accountService";
-import adjutorApi from "../../src/lib/adjutorApi";
-import { generateToken } from "../../src/reusables";
-import { v4 as uuidv4 } from "uuid";
 import { httpErrors, errorResponseMessage as errMsg } from "../../src/lib";
+import adjutorApi from "../../src/lib/adjutorApi";
+import { accountService } from "../../src/services";
+import { userDao } from "../../src/database/dao";
+import { generateToken } from "../../src/reusables";
+import { Model } from "objection";
+
+import { v4 as uuidv4 } from "uuid";
 
 // Mock the dependencies
 jest.mock("../../src/database/dao/userDao");
-jest.mock("../../src/database/dao/accountDao");
 jest.mock("../../src/services/accountService");
 jest.mock("../../src/lib/adjutorApi");
 jest.mock("../../src/reusables");
 jest.mock("uuid");
 
 describe("userService", () => {
+  beforeAll(async () => {
+    const knex = await initializeDatabase();
+    Model.knex(knex);
+  });
+
   describe("createUser", () => {
     let dto: CreateUserDto;
 
@@ -148,5 +156,14 @@ describe("userService", () => {
         errMsg.ACCOUNT_CREATION_ERROR
       );
     });
+
+    // it("should throw a ValidationError if DTO validation fails", async () => {
+    //   // Modify the DTO to trigger validation errors
+    //   dto.bvn = "invalid-bvn"; // Example of an invalid BVN
+
+    //   await expect(userService.createUser(dto)).rejects.toThrow(
+    //     httpErrors.ValidationError
+    //   );
+    // });
   });
 });

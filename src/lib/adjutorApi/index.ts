@@ -19,6 +19,7 @@ class AdjutorApi {
       { type: "email", value: email },
       { type: "domain", value: domain },
     ].filter((endpoint) => endpoint.value);
+
     for (const endpoint of endpoints) {
       try {
         const response = await fetch(
@@ -31,17 +32,27 @@ class AdjutorApi {
             },
           }
         );
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
+        console.log(response.status);
+
+        if (response.ok) {
+          console.log(await response.json());
+
+          return true; // Record found, user is blacklisted
         }
-        const data = await response.json();
-        return true;
+
+        if (response.status === 400) {
+          continue; // Record not found, check next endpoint
+        }
+
+        // throw new Error(`HTTP error! Status: ${response.status}`);
       } catch (error) {
-        console.error("Error:", error);
+        // Log the error for debugging purposes
+        console.error("Error calling adjutorApi.checkCustomerKarma:", error);
+        throw new Error("Unable to Create User , try again ");
       }
     }
 
-    return false;
+    return false; // No blacklisting record found for any endpoint
   }
 }
 

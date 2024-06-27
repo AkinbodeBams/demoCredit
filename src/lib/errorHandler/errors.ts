@@ -76,6 +76,12 @@ class ForbiddenError extends ApplicationError {
     this.name = "ForbiddenError";
   }
 }
+class ServiceError extends ApplicationError {
+  constructor(message: string) {
+    super(message, 503, "ServiceError");
+    this.name = "ServiceError";
+  }
+}
 
 export default {
   NotFoundError,
@@ -87,4 +93,5 @@ export default {
   UnauthorizedError,
   ConflictError,
   ForbiddenError,
+  ServiceError,
 };

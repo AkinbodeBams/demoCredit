@@ -21,4 +21,6 @@ export enum errorResponseMessage {
 
   TRANSFER_ERROR = "Error transferring funds",
   ACCOUNT_CONFLICT_ERROR = "You cannot transfer funds to account of the same account",
+
+  SERVICE_UNAVAILABLE = "Service is unavailable ",
 }

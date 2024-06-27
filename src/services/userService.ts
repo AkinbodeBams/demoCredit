@@ -2,7 +2,6 @@ import { CreateAccountDto, CreateUserDto } from "../dto";
 import { accountDao, userDao } from "../database/dao";
 import { v4 as uuidv4 } from "uuid";
 import { findUserWithAccountByUserId } from "../database/dao/userDao";
-import accountService from "./accountService";
 import { generateToken } from "../reusables";
 import adjutorApi from "../lib/adjutorApi";
 import {
@@ -10,6 +9,7 @@ import {
   httpErrors,
   successResponseMessage as successMsg,
 } from "../lib";
+import { accountService } from ".";
 
 const generateUniqueAccountNumber = async (): Promise<string> => {
   let unique = false;
@@ -35,12 +35,20 @@ const createUser = async (dto: CreateUserDto) => {
   const userId = uuidv4();
 
   try {
-    const isBlackListed = await adjutorApi.checkCustomerKarma(
-      dto.domain,
-      dto.bvn,
-      dto.phoneNumber,
-      dto.email
-    );
+    let isBlackListed;
+    try {
+      isBlackListed = await adjutorApi.checkCustomerKarma(
+        dto.domain,
+        dto.bvn,
+        dto.phoneNumber,
+        dto.email
+      );
+    } catch (apiError) {
+      console.error("Error calling adjutorApi.checkCustomerKarma:", apiError);
+      throw new httpErrors.ServiceError(
+        `${errMsg.ACCOUNT_CREATION_ERROR}: ${errMsg.SERVICE_UNAVAILABLE}`
+      );
+    }
 
     if (isBlackListed) {
       throw new httpErrors.ForbiddenError(errMsg.USER_BLACKLISTED);
@@ -68,12 +76,14 @@ const createUser = async (dto: CreateUserDto) => {
     return { data: responseData };
   } catch (error) {
     if (error instanceof httpErrors.ValidationError) {
-      throw error;
+      throw new httpErrors.ValidationError(
+        `${errMsg.ACCOUNT_CREATION_ERROR}: ${error.message}`
+      );
     } else if (error instanceof httpErrors.ForbiddenError) {
       throw error;
     } else {
       throw new httpErrors.InternalServerError(
-        `${errMsg.ACCOUNT_CREATION_ERROR}`
+        `${errMsg.ACCOUNT_CREATION_ERROR}: ${error.message}`
       );
     }
   }

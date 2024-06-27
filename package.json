@@ -41,12 +41,13 @@
   },
   "jest": {
     "preset": "ts-jest",
-    "testEnvironment": "node",
-    "modulePathIgnorePatterns": [
-      "<rootDir>/dist/"
-    ],
-    "collectCoverageFrom": [
-      "src/**/*.ts"
-    ]
+    "globals": {
+      "ts-jest": {
+        "compilerOptions": {
+          "emitDecoratorMetadata": true,
+          "experimentalDecorators": true
+        }
+      }
+    }
   }
 }
