@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "rimraf build && tsc",
-    "start": "node build/index.js",
+    "start": "node build/startScript.js",
     "test": "jest",
     "dev": "cross-env NODE_ENV=development ts-node-dev --files src/index.ts",
     "migrate": "npx knex migrate:latest --knexfile build/database/knexfile.js",
