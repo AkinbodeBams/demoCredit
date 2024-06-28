@@ -1,10 +1,8 @@
-import dotenv from "dotenv";
+import "dotenv/config";
 import app from "./app";
 import { initializeDatabase } from "./database";
 import { configureEnv } from "./envStore";
 import { setupApp } from "./reusables";
-
-dotenv.config();
 
 const initialize = async (callback: () => void | Promise<void>) => {
   try {

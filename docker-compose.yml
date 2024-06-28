@@ -33,5 +33,4 @@ services:
     restart: unless-stopped
     command: >
       sh -c "
-      npm run migrate &&
       npm start"

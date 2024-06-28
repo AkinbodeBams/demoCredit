@@ -1,8 +1,8 @@
-import { userDao } from "../src/database/dao";
-import authService from "../src/services/authService";
-import { generateTokenDto } from "../src/dto/authDto";
-import { errorResponseMessage as errMsg, httpErrors } from "../src/lib";
-import { generateToken } from "../src/reusables";
+import { userDao } from "../../src/database/dao";
+import authService from "../../src/services/authService";
+import { generateTokenDto } from "../../src/dto/authDto";
+import { errorResponseMessage as errMsg, httpErrors } from "../../src/lib";
+import { generateToken } from "../../src/reusables";
 
 jest.mock("../../src/database/dao", () => ({
   userDao: {
