@@ -2,8 +2,6 @@ import { EnvStore } from "./types";
 import dotenv from "dotenv";
 dotenv.config();
 
-// console.log("Environment variables loaded:", process.env); // Log all environment variables to debug
-
 const envStore: EnvStore = {
   DB_HOST: process.env.DB_HOST || "",
   DB_USERNAME: process.env.DB_USERNAME || "",
@@ -11,7 +9,7 @@ const envStore: EnvStore = {
   DB_NAME: process.env.DB_NAME || "",
   DB_PORT: process.env.DB_PORT || "",
   // REDIS_URL: process.env.REDIS_URL || '',
-  APP_ENV: process.env.APP_ENV as "development" | "production",
+  NODE_ENV: process.env.NODE_ENV as "development" | "production" | "test",
   adjutorApi: process.env.adjutorApi || "",
 };
 
@@ -21,19 +19,22 @@ const setEnvStoreFromEnvironment = () => {
 
     if (envValue) {
       if (
-        envVar === "APP_ENV" &&
+        envVar === "NODE_ENV" &&
         (envValue === "development" || envValue === "production")
       ) {
         envStore[envVar] = envValue as "development" | "production";
-      } else if (envVar !== "APP_ENV") {
+      } else if (envVar !== "NODE_ENV") {
         envStore[envVar] = envValue;
       }
     }
   });
 
-  if (envStore.APP_ENV !== "development" && envStore.APP_ENV !== "production") {
+  if (
+    envStore.NODE_ENV !== "development" &&
+    envStore.NODE_ENV !== "production"
+  ) {
     console.error(
-      `Invalid APP_ENV value: ${envStore.APP_ENV}. Expected "development" or "production".`
+      `Invalid NODE_ENV value: ${envStore.NODE_ENV}. Expected "development" or "production".`
     );
     process.exit(1);
   }

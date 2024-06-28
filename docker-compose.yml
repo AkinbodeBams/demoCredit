@@ -1,0 +1,37 @@
+version: "3.9"
+services:
+  db:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "3307:3306"
+    container_name: demo_credit_db
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+
+  app:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    container_name: demo_credit
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    environment:
+      - NODE_ENV=production # Set to production
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+    command: >
+      sh -c "
+      npm run migrate &&
+      npm start"

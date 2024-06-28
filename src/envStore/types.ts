@@ -4,6 +4,6 @@ export interface EnvStore {
   DB_USERNAME: string;
   DB_PASSWORD: string;
   DB_NAME: string;
-  APP_ENV: "development" | "production";
+  NODE_ENV: "development" | "production" | "test";
   adjutorApi: string;
 }

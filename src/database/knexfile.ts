@@ -4,10 +4,10 @@ import { Knex } from "knex";
 import path from "path";
 
 const connection = {
-  host: "db", // Use the service name defined in docker-compose.yml
-  user: process.env.DB_USER || "root",
-  password: process.env.DB_PASS || "",
-  database: process.env.DB_NAME || "mydatabase",
+  host: process.env.NODE_ENV === "production" ? "db" : "localhost",
+  user: "root",
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
 };
 
 const knexConfig: { [key: string]: Knex.Config } = {

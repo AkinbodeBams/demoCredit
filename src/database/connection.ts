@@ -5,7 +5,7 @@ import knexConfig from "./knexfile";
 
 export async function initializeDatabase(): Promise<KnexType> {
   await configureEnv();
-  const config = knexConfig[envStore.APP_ENV];
+  const config = knexConfig[process.env.NODE_ENV as string];
   const knex = Knex(config);
   Model.knex(knex);
 
