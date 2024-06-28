@@ -11,9 +11,10 @@ COPY . .
 
 RUN npm run build
 
-RUN npm run migrate
+
 
 
 EXPOSE 80
 
+CMD ["npm", "migrate"]
 CMD ["npm", "start"]

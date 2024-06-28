@@ -8,7 +8,6 @@ const envStore: EnvStore = {
   DB_PASSWORD: process.env.DB_PASSWORD || "",
   DB_NAME: process.env.DB_NAME || "",
   DB_PORT: process.env.DB_PORT || "",
-  // REDIS_URL: process.env.REDIS_URL || '',
   NODE_ENV: process.env.NODE_ENV as "development" | "production" | "test",
   adjutorApi: process.env.adjutorApi || "",
 };
