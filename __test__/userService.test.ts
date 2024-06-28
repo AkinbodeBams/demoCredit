@@ -1,18 +1,15 @@
-// __test__/intergrations/userService.test.ts
-
-import { initializeDatabase } from "../../src/database"; // Adjust path if necessary
-import userService from "../../src/services/userService";
-import { CreateUserDto } from "../../src/dto";
-import { httpErrors, errorResponseMessage as errMsg } from "../../src/lib";
-import adjutorApi from "../../src/lib/adjutorApi";
-import { accountService } from "../../src/services";
-import { userDao } from "../../src/database/dao";
-import { generateToken } from "../../src/reusables";
+import { initializeDatabase } from "../src/database"; // Adjust path if necessary
+import userService from "../src/services/userService";
+import { CreateUserDto } from "../src/dto";
+import { httpErrors, errorResponseMessage as errMsg } from "../src/lib";
+import adjutorApi from "../src/lib/adjutorApi";
+import { accountService } from "../src/services";
+import { userDao } from "../src/database/dao";
+import { generateToken } from "../src/reusables";
 import { Model } from "objection";
 
 import { v4 as uuidv4 } from "uuid";
 
-// Mock the dependencies
 jest.mock("../../src/database/dao/userDao");
 jest.mock("../../src/services/accountService");
 jest.mock("../../src/lib/adjutorApi");

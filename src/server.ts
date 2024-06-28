@@ -1,7 +1,5 @@
 import http from "http";
-import os from "node:os";
 import app from "./app";
-import cluster from "cluster";
 
 const port = process.env.PORT || 3000;
 const { pid } = process;
@@ -42,18 +40,11 @@ const onError = (error: any) => {
 };
 
 const startServer = () => {
-  if (cluster.isPrimary) {
-    const num_workers = os.cpus().length;
-    for (let index = 0; index < num_workers; index++) {
-      cluster.fork();
-    }
-  } else {
-    server.listen(port);
-    server.keepAliveTimeout = 90000;
-    server.headersTimeout = 100000;
-    server.on("error", onError);
-    server.on("listening", onListening);
-  }
+  server.listen(port);
+  server.keepAliveTimeout = 90000;
+  server.headersTimeout = 100000;
+  server.on("error", onError);
+  server.on("listening", onListening);
 };
 
 export default startServer;
