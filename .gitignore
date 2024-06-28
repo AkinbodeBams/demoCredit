@@ -111,3 +111,4 @@ build
 .vscode
 dump.rdb
 
+.env.prod
