@@ -37,7 +37,7 @@ create a .env file and fill with the .env.example key=value
 
 <img width="527" alt="image" src="https://github.com/AkinbodeBams/demoCredit/assets/53081200/050d9d74-3319-4ee3-aeb1-db798c0948ee">
 
-## BaseUrl ==> https://akinbodebamigboye-lendsqr-be-test.vendorpal.biz or https://34.232.221.36:80
+## BaseUrl ==> https://akinbodebamigboye-lendsqr-be-test.vendorpal.biz 
 
 # Postman Url
 
