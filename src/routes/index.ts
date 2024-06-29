@@ -19,9 +19,9 @@ router.get("/health-status", (req: Request, res: Response) => {
   });
 });
 
-router.use("/user", userRouter);
-router.use("/account", accountRouter);
-router.use("/auth", authRouter);
+router.use("/api/user", userRouter);
+router.use("/api/account", accountRouter);
+router.use("/api/auth", authRouter);
 
 router.all("*", (req: Request, res: Response) => {
   throw new httpErrors.NotFoundError(

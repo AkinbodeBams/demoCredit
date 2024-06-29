@@ -5,7 +5,7 @@ export class tokenDto {
   constructor(token: string) {
     this.token = token;
   }
-  @IsNotEmpty()
+  @IsNotEmpty({ message: "token not provided" })
   @IsString()
   @Matches(/^\d{11}-\d{13}$/, {
     message: "invalid token format , ",
