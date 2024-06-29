@@ -35,8 +35,11 @@ create a .env file and fill with the .env.example key=value
 
 ## ERD
 
-![ERD from Mysql]
-<img width="527" alt="image" src="https://github.com/AkinbodeBams/demoCredit/assets/53081200/6cc38d2a-b4cd-4316-9b46-430b3bb20c4c">
+![ERD from Mysql](https://assignemt.s3.us-east-1.amazonaws.com/Screenshot%202024-06-28%20232416.png?response-content-disposition=inline&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEGcaCXVzLWVhc3QtMSJHMEUCIQCyOAFd3Vru9b9fbEMLmCdYg3mreeMS7d5Uoa57rF8a9QIgRzoW5eFNHFe93WK0aWI2bv6FihCkvPSmhFAMg6%2Bx6ccq%2FwIIIBAAGgw3MzAzMzU1MjAzNzgiDGV96MiVDG%2Fb3uxB9CrcAqWS3AIeqnVojVNqIpDS4Vn4rSwuoFnzSxP5modSEc19mMqqh4RufOOc%2BcoEer0Q4jAPJrqx7%2FL3BugSX4hLdwsYmBVrclXIqKedXxPTGtPc06YxDFjo5VkkglHptECjTDzibzv1%2FG7iquXD4gIQnBShBK1SKX78VLr1aq3V5XV%2BUNcPKmGAkaIeFfu3WAGZrZSy384uH3xdPYApDstKuZuimX7RVvnjPZ5kOpwSLpzhZFogW9%2BAJGb4YskSQewkSf6FbV%2BNb4ABzabC%2Fo8eQohvLU8kNj%2B%2FvvF2fwBaXXhzdFweEUKlq583kpMemV6oyjVPY34qfGeRMmQQ23vICsGDYJ0Vw251aWk%2FFuGHFiOO%2BzktPpilQlWMuNK85kWuKZNDQf8gg2mZPgRL2MKCPZtbM8WxuBCx%2Bix%2B8AJ%2FV1pEnCC9aicyo%2FjHU7KN21mJXh02KZ%2Fftt2s4PlcSDD5rPqzBjqzAuI4O1EDvfEmtpfJwnt%2BC7YgGiUEjY4pbO1MM5Je5UsAMBJ2Kp8EvSdQt8T8Zu%2Fzcn%2BIAFwkVbP4sfAwO77tshw5WZUFtZNtRi5Q3xRF36JkFs6YGttoF%2FA9LXiDcpCHDqDoOBSURndM4lNhuNUN1WKJsAeKUpZPoBMbE%2BRGbMKMxqw1wZi83kUzt4ecq915Q%2Fk2o99T%2FE4j%2FJaG3iCO5AIJNmRn14rUv%2BX3%2BmEBF2fvo2JRYeerewgyX5pQCBJCK%2FOkKIN%2BrcycWltrDHQmuYXLdPF41KuLGwLF%2BUjnU8Mxc6N4qzGglXBtICuq9P%2Fu83OgWF5%2BRosF4X1PobrALvxcH9j63Y%2FIc7aSJ1PuDmfYfPkpY5AEXsmm%2FxZH74WjKtW9rBuSpd%2BKyMdP%2BEJ0cQ5%2BV7c%3D&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20240628T223230Z&X-Amz-SignedHeaders=host&X-Amz-Expires=300&X-Amz-Credential=ASIA2UC3DUZ5GCNALNGN%2F20240628%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Signature=5dfe1decd885eb72e0c3662ac96b8d7433a2b45a552dc94c99ec9f406cf8f33d)
+
+# Postman Url
+
+[Akinbode-bamigboye-postman-documenation](https://documenter.getpostman.com/view/23775911/2sA3duFYDu)
 
 # Implementation
 
