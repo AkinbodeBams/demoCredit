@@ -62,6 +62,7 @@ create a .env file and fill with the .env.example key=value
       		- bvn *required*
       		- email *optional*
       		- phoneNumber *optional*
+      		- domain *optional*
       			- one of either email or phone number must be provided
       		- Validations:
       			- email:
