@@ -70,7 +70,6 @@ const withdrawFund = async (
         user!.id as string,
         trx
       );
-      console.log(account);
 
       if (!account) {
         throw new httpErrors.NotFoundError(
@@ -135,7 +134,6 @@ const transferFund = async (
       await toAccount.$query(trx).patch({ balance: newToBalance });
 
       const recipient = (await userDao.findById(toAccount.userId)) as User;
-      console.log(recipient);
 
       return {
         data: {

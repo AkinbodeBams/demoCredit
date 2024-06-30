@@ -21,7 +21,6 @@ const withdrawFund = async (req: Request, res: Response) => {
   );
 
   const response = await accountService.withdrawFund(req, dto);
-  console.log(response);
 
   if (!response.data) {
     return errorResponse({ ...response, res });
